@@ -4,10 +4,11 @@ import com.facebook.react.uimanager.annotations.ReactProp;
 import com.facebook.react.uimanager.SimpleViewManager;
 import com.facebook.react.uimanager.ThemedReactContext;
 
+import android.content.Context;
 import android.content.res.ColorStateList;
 import android.support.v4.widget.CompoundButtonCompat;
+import android.support.v7.widget.TintContextWrapper;
 import android.widget.CompoundButton;
-import android.content.ContextWrapper;
 
 import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.common.SystemClock;
@@ -20,17 +21,28 @@ public class RadioButtonManager extends SimpleViewManager<RadioButtonView> {
 
 
   private static final CompoundButton.OnCheckedChangeListener ON_CHECKED_CHANGE_LISTENER =
-    new CompoundButton.OnCheckedChangeListener() {
-      @Override
-      public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-        ReactContext reactContext = (ReactContext) ((ContextWrapper) buttonView.getContext()).getBaseContext();
-        reactContext.getNativeModule(UIManagerModule.class).getEventDispatcher().dispatchEvent(
-            new RadioButtonEvent(
-              buttonView.getId(),
-              SystemClock.nanoTime(),
-              isChecked));
-      }
-    };
+          new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+              ReactContext reactContext = getReactContext(buttonView);
+              reactContext.getNativeModule(UIManagerModule.class).getEventDispatcher().dispatchEvent(
+                      new RadioButtonEvent(
+                              buttonView.getId(),
+                              SystemClock.nanoTime(),
+                              isChecked));
+            }
+
+            private ReactContext getReactContext(CompoundButton buttonView) {
+              ReactContext reactContext;
+              Context ctx = buttonView.getContext();
+              if (ctx instanceof TintContextWrapper) {
+                reactContext = (ReactContext) ((TintContextWrapper) ctx).getBaseContext();
+              } else {
+                reactContext = (ReactContext) buttonView.getContext();
+              }
+              return reactContext;
+            }
+          };
 
 
   @Override
