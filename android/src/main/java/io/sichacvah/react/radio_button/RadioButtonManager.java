@@ -4,10 +4,12 @@ import com.facebook.react.uimanager.annotations.ReactProp;
 import com.facebook.react.uimanager.SimpleViewManager;
 import com.facebook.react.uimanager.ThemedReactContext;
 
+import android.content.Context;
 import android.content.res.ColorStateList;
-import android.support.v4.widget.CompoundButtonCompat;
 import android.widget.CompoundButton;
-import android.content.ContextWrapper;
+
+import androidx.appcompat.widget.TintContextWrapper;
+import androidx.core.widget.CompoundButtonCompat;
 
 import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.common.SystemClock;
