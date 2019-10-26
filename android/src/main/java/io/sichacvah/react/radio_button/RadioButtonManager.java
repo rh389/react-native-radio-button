@@ -4,11 +4,10 @@ import com.facebook.react.uimanager.annotations.ReactProp;
 import com.facebook.react.uimanager.SimpleViewManager;
 import com.facebook.react.uimanager.ThemedReactContext;
 
-import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.res.ColorStateList;
 import android.widget.CompoundButton;
 
-import androidx.appcompat.widget.TintContextWrapper;
 import androidx.core.widget.CompoundButtonCompat;
 
 import com.facebook.react.bridge.ReactContext;
